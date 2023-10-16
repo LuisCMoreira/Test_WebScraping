@@ -1,5 +1,5 @@
 # Test_WebScrapping
 
-## ScapingEG
+## ScrapingEG
 
-- an example to scrape data from a website and put it to a custem schema
+- A python example to scrape data from a website and put it to a custom Schema.
