@@ -1,11 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+from dbInputEGs import insert_to_mongodb
+from dbInputEGs import insert_to_mysql
 
 
 # Search information - specific to the site url and page structure
-search_cat="cat. name from the url"
-search_words="q-word1-word2"
+search_cat = "site category path"
+search_words = "q-word1-word2"
 top_price="100"
 page="page=1&" # "" for null and "page=2&"
 
@@ -18,7 +20,7 @@ def scrape_web_products():
     for page_number in range(1, total_pages + 1):
         # Construct the URL with pagination
         page = f"page={page_number}&"
-        url = f"https://www.somosite.pt/{search_cat}/{search_words}/?{page}search%5Bfilter_float_price:to%5D={top_price}"
+        url = f"https://www.someSite.pt/{search_cat}/{search_words}/?{page}search%5Bfilter_float_price:to%5D={top_price}"
 
         response = requests.get(url)
 
@@ -62,6 +64,12 @@ def scrape_web_products():
                 "updated_at": updated_at,
                 "timestamp": datetime.now()
             }
+
+            # Uncomment to input to MongoDB
+            #insert_to_mongodb("someColection", "someDB",custom_schema, mongodb_uri="mongodb://localhost:27017/")
+
+            # Uncomment to input to mySQL
+            #insert_to_mysql("localhost", "user", "pass", "database", custom_schema)
             
             print(f"Inserted Record from page {page_number}:", custom_schema)
             print("=" * 60)
